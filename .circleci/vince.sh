@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenulvin-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=proton
+COMPILER=clang14
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -170,16 +170,16 @@ function cloneTC() {
 function exports() {
 	
         # Export KBUILD_COMPILER_STRING
-        if [ -d ${KERNEL_DIR}/clang ];
-           then
-               export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
-               export LD_LIBRARY_PATH="${KERNEL_DIR}/clang/lib:$LD_LIBRARY_PATH"
+#        if [ -d ${KERNEL_DIR}/clang ];
+#           then
+#               export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+#               export LD_LIBRARY_PATH="${KERNEL_DIR}/clang/lib:$LD_LIBRARY_PATH"
                
-        elif [ -d ${KERNEL_DIR}/gcc64 ];
-           then
-               export KBUILD_COMPILER_STRING=$("$KERNEL_DIR/gcc64"/bin/aarch64-elf-gcc --version | head -n 1)       
+#        elif [ -d ${KERNEL_DIR}/gcc64 ];
+#           then
+#               export KBUILD_COMPILER_STRING=$("$KERNEL_DIR/gcc64"/bin/aarch64-elf-gcc --version | head -n 1)       
                
-        elif [ -d ${KERNEL_DIR}/cosmic ];
+        if [ -d ${KERNEL_DIR}/cosmic ];
            then
                export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/cosmic/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')        
                
@@ -243,9 +243,9 @@ START=$(date +"%s")
 	   then
 	       make -kj$(nproc --all) O=out \	       
 	       ARCH=arm64 \
-	       CC=clang \
-	       CROSS_COMPILE=aarch64-linux-gnu- \
-	       CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+#	       CC=clang \
+#	       CROSS_COMPILE=aarch64-linux-gnu- \
+#	       CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
 	       #LLVM=1 \
 	       #LLVM_IAS=1 \
 	       #LD=${LINKER} \
@@ -257,9 +257,9 @@ START=$(date +"%s")
 	       #READELF=llvm-readelf \
 	       #OBJSIZE=llvm-size \
 	       
-#	       CC=$KERNEL_CLANG \
-#           CROSS_COMPILE=$KERNEL_CCOMPILE64 \
-#           CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
+	       CC=$KERNEL_CLANG \
+           CROSS_COMPILE=$KERNEL_CCOMPILE64 \
+           CROSS_COMPILE_ARM32=$KERNEL_CCOMPILE32 \
 #           CLANG_TRIPLE=aarch64-linux-gnu- \
            #LD=${LINKER} \
 #           LLVM=1 \
