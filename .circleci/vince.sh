@@ -174,12 +174,15 @@ function exports() {
 #           then
 #               export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 #               export LD_LIBRARY_PATH="${KERNEL_DIR}/clang/lib:$LD_LIBRARY_PATH"
+               
 #        elif [ -d ${KERNEL_DIR}/gcc64 ];
 #           then
 #               export KBUILD_COMPILER_STRING=$("$KERNEL_DIR/gcc64"/bin/aarch64-elf-gcc --version | head -n 1)       
+               
         if [ -d ${KERNEL_DIR}/cosmic ];
            then
                export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/cosmic/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')        
+               
         elif [ -d ${KERNEL_DIR}/aosp-clang ];
             then
                export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/aosp-clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
@@ -246,7 +249,7 @@ START=$(date +"%s")
            CLANG_TRIPLE=aarch64-linux-gnu- \
            #LD=${LINKER} \
            LLVM=1 \
-           LLVM_IAS=1 \
+           #LLVM_IAS=1 \
            #AR=llvm-ar \
            #NM=llvm-nm \
            #OBJCOPY=llvm-objcopy \
